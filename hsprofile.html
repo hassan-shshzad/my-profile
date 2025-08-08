@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Name — Front-End Developer</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#0f1720;
+      --muted:#99a0a6;
+      --accent:#4dd0e1;
+      --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+      --maxw:1100px;
+    }
+    :root.light{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --muted:#556170;
+      --accent:#0078d7;
+      --glass: rgba(0,0,0,0.03);
+    }
+
+    /* Base reset */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background:var(--bg);
+      color: #e6eef3;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    body.light{color:#0b1220}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:28px}
+
+    /* Header / Nav */
+    header{
+      position:sticky;top:12px;z-index:40;
+      display:flex;align-items:center;justify-content:space-between;
+      background:linear-gradient(180deg,var(--glass),transparent);
+      padding:10px 18px;border-radius:12px;
+      margin:10px;
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo {
+      width:44px;height:44px;border-radius:10px;
+      display:grid;place-items:center;font-weight:700;
+      background:linear-gradient(135deg,var(--accent),#7be8f0);
+      color:#04202a;font-size:16px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    }
+    nav{display:flex;gap:14px;align-items:center}
+    nav a{
+      color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:8px;
+      font-weight:600;font-size:0.95rem;
+    }
+    nav a:hover, nav a:focus{color:var(--accent);outline:none}
+    .actions{display:flex;gap:10px;align-items:center}
+
+    /* Dark toggle */
+    .toggle{
+      display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);
+      padding:6px 10px;border-radius:999px;cursor:pointer;
+    }
+    .resume-btn{
+      display:inline-block;padding:8px 12px;background:var(--accent);color:#022b30;border-radius:10px;font-weight:700;text-decoration:none;
+      box-shadow:0 8px 20px rgba(5,20,30,0.3);
+    }
+
+    /* HERO */
+    .hero{
+      display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;
+      margin:28px 0;padding:36px;border-radius:16px;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05));
+      backdrop-filter: blur(6px);
+    }
+    .hero-left h1{font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 10px}
+    .hero-left p {color:var(--muted);margin:0 0 18px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn-primary{
+      background:var(--accent);color:#022b30;padding:12px 16px;border-radius:10px;font-weight:700;border:none;cursor:pointer;
+    }
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:var(--muted);cursor:pointer}
+
+    /* Right column - carousel preview */
+    .hero-right{display:flex;flex-direction:column;gap:12px;align-items:center}
+    .carousel{
+      width:100%;height:260px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+      border-radius:12px;padding:12px;display:flex;align-items:center;gap:12px;overflow:hidden;
+    }
+    .carousel-track{
+      display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scroll-behavior:smooth;
+    }
+    .carousel-track::-webkit-scrollbar{height:8px}
+    .carousel-track::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:10px}
+    .card-thumb{min-width:200px;border-radius:12px;overflow:hidden;flex-shrink:0;background:#071018;box-shadow:0 8px 24px rgba(0,0,0,0.5)}
+    .card-thumb img{display:block;width:100%;height:160px;object-fit:cover}
+    .card-thumb .meta{padding:8px;color:var(--muted);font-size:0.92rem}
+
+    /* Features section */
+    section{margin:28px 0}
+    .section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .grid{
+      display:grid;gap:18px;
+    }
+    .feature-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .feature{
+      background:var(--card);padding:20px;border-radius:12px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.35);text-align:center;
+      transition:transform .28s ease, box-shadow .28s ease;
+    }
+    .feature:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(0,0,0,0.5)}
+    .feature img{width:80px;height:80px;object-fit:contain;margin-bottom:10px}
+
+    /* Skills */
+    .skills{display:flex;gap:12px;flex-wrap:wrap}
+    .skill{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:10px 12px;border-radius:10px;color:var(--muted);font-weight:600}
+
+ 
+    
+    .project img{width:100%;height:160px;object-fit:cover}
+    .project-body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .project h4{margin:0}
+    .project p{color:var(--muted);margin:0;font-size:0.95rem}
+    .project:hover{transform:translateY(-8px)}
+
+    /* Contact */
+    .contact-grid{grid-template-columns:1fr 360px}
+    .contact-card{background:var(--card);padding:18px;border-radius:12px}
+    form label{display:block;font-weight:600;margin:10px 0 6px}
+    input,textarea{
+      width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);
+      background:transparent;color:inherit;font-size:0.95rem;
+    }
+    textarea{min-height:110px;resize:vertical}
+    .socials{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .socials a{padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02),transparent);text-decoration:none;color:var(--muted)}
+
+    /* Footer */
+    footer{color:var(--muted);padding:28px;margin-top:14px;text-align:center}
+
+    /* Reveal on scroll (initial state) */
+    .reveal{opacity:0;transform:translateY(18px);transition:all .7s cubic-bezier(.2,.9,.3,1)}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* Responsive tweaks */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .hero-right{order:-1}
+      .carousel{height:220px}
+    }
+    @media (max-width:560px){
+      .wrap{padding:18px}
+      .carousel{height:200px}
+      .card-thumb{min-width:160px}
+    }
+
+    /* Light theme tweaks */
+    body.light header{background:linear-gradient(180deg, rgba(255,255,255,0.04), transparent)}
+    body.light .logo{background:linear-gradient(135deg,var(--accent), #9adff3); color: #fff}
+    body.light .resume-btn{color:#fff}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Header -->
+    <header role="banner" class="reveal">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">HS</div>
+        <div>
+          <div style="font-weight:700">Hassan Shahzad</div>
+          <div style="font-size:0.85rem;color:var(--muted)">Full-Stack Developer</div>
+        </div>
+      </div>
+
+      <nav role="navigation" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="actions">
+        <button class="toggle" id="themeToggle" aria-pressed="false" title="Toggle dark / light">
+          <span id="themeIcon">🌙</span>
+          <span style="font-size:0.92rem">Theme</span>
+        </button>
+        <a class="resume-btn" href="/resume.pdf" download>Download Resume</a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <main id="home" class="reveal hero" role="main" aria-labelledby="hero-title">
+      <div class="hero-left">
+        <h1 id="hero-title">Hi — I'm <span style="color:var(--accent)">Hassan Shahzad</span></h1>
+        <p>Full- Developer focused on building accessible, responsive, and delightful user interfaces using HTML, CSS, JavaScript and modern frameworks.</p>
+
+        <div class="cta-row" role="toolbar" aria-label="Primary actions">
+          <a class="btn-primary" href="#projects">See Projects</a>
+          <a class="btn-ghost" href="#contact">Get in touch</a>
+        </div>
+
+        <p style="margin-top:16px;color:var(--muted);font-size:0.95rem">"Available for business projects & freelance work — open to collaborate."</p>
+      </div>
+
+      <aside class="hero-right" aria-label="Featured projects preview">
+        <div style="font-size:0.95rem;color:var(--muted);align-self:flex-start">Recent work</div>
+
+        <div class="carousel" aria-hidden="false">
+          <div class="carousel-track" id="carouselTrack" tabindex="0" role="list">
+            <!-- Replace images with your project screenshots -->
+            <div class="card-thumb" role="listitem">
+              <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=80" alt="Project screenshot 1">
+              <div class="meta">Project A — UI / Landing</div>
+            </div>
+            <div class="card-thumb" role="listitem">
+              <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80" alt="Project screenshot 2">
+              <div class="meta">Project B — Dashboard</div>
+            </div>
+            <div class="card-thumb" role="listitem">
+              <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=900&q=80" alt="Project screenshot 3">
+              <div class="meta">Project C — E-commerce</div>
+            </div>
+            <div class="card-thumb" role="listitem">
+              <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=900&q=80" alt="Project screenshot 4">
+              <div class="meta">Project D — Blog</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size:0.86rem;color:var(--muted);margin-top:8px">Scroll →</div>
+      </aside>
+    </main>
+
+    <!-- ABOUT -->
+    <section id="about" class="reveal" aria-labelledby="about-title">
+      <div class="section-head">
+        <h2 id="about-title">About Me</h2>
+        <div style="color:var(--muted);font-size:0.95rem">I turn designs into responsive web pages</div>
+      </div>
+
+      <div class="grid" style="grid-template-columns:1fr 360px;gap:20px">
+        <div>
+          <p style="color:var(--muted)">I am a Full Stack Developer with experience building modern, scalable, and user-friendly web applications. I focus on creating seamless front-end experiences and robust back-end solutions. My core tools include HTML, CSS (Flexbox & Grid), JavaScript, React, Node.js, Python (Django), Git, and MySQL.</p>
+
+          <h3 style="margin-top:18px">What I do</h3>
+          <ul style="color:var(--muted);line-height:1.8">
+            <li>End-to-end web app development (front-end + back-end)</li>
+            <li>Responsive, mobile-first design</li>
+            <li>Secure authentication and role-based access systems</li>
+          </ul>
+        </div>
+
+        <div class="contact-card" style="display:grid;gap:10px;align-content:start">
+          <strong style="font-size:1.05rem">Quick Info</strong>
+          <div style="color:var(--muted)">Location: Pakistan • Open to remote work</div>
+          <div style="color:var(--muted)">Email: <a href="hassanshahzad1502@gmail.com">hassanshahzad1502@gmail.com</a></div>
+          <div style="color:var(--muted)">LinkedIn: <a href="#https://www.linkedin.com/in/hassan-shahzad-07536b318/" style="color:var(--accent)">https://www.linkedin.com/in/hassan-shahzad-07536b318/</a></div>
+          <div style="color:var(--muted)">Availability: Immediate</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="reveal" aria-labelledby="skills-title">
+      <div class="section-head">
+        <h2 id="skills-title">Skills</h2>
+        <div style="color:var(--muted);font-size:0.95rem">Tools & technologies I use</div>
+      </div>
+
+      <div class="skills" style="margin-top:12px">
+        <span class="skill">HTML5</span>
+        <span class="skill">CSS3 (Flexbox & Grid)</span>
+        <span class="skill">JavaScript</span>
+        <span class="skill">React</span>
+        <span class="skill">Responsive Design</span>
+        <span class="skill">Git & GitHub</span>
+        <span class="skill">Figma (handoff)</span>
+        <span class="skill">Accessibility (a11y)</span>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+ <section id="projects" style="padding: 60px 20px;  color:var(--accent);">
+  <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px;">My Projects</h2>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+
+    <!-- Project Box -->
+    <div style="background-color: #1e1e1e; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <img src="https://i.pinimg.com/1200x/88/fe/59/88fe59542e8b33fa0c42a30992f3f7f8.jpg" alt="Project 1" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+      <h3 style="margin-bottom: 10px;">Car rental systems</h3>
+      <p style="font-size: 0.9rem; color: #ccc;"> A desktop application built with Python, Tkinter, and SQLite that allows users to search, book, and manage cars. It includes booking history, availability tracking, and a user-friendly interface for efficient rental management.</p>
+      <a href="https://github.com/hassan-shshzad/rent-car-system.git" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ff4b2b; color: white; border-radius: 6px; text-decoration: none; transition: background 0.3s ease;">View Project</a>
+    </div>
+
+    <!-- Repeat for other 9 projects -->
+    <div style="background-color: #1e1e1e; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <img src="https://i.pinimg.com/736x/e2/42/a5/e242a5362a5b0f6dae0b5b3fdbafe721.jpg" alt="Project 2" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+      <h3 style="margin-bottom: 10px;">Inventory Management System</h3>
+      <p style="font-size: 0.9rem; color: #ccc;"> A Python-based inventory solution with features like adding, updating, deleting, searching, and exporting data. Designed with a dark-themed PyQt5 interface, it helps businesses track stock levels and receive alerts for low inventory.</p>
+      <a href="https://github.com/hassan-shshzad/inventory-management-system.git" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ff4b2b; color: white; border-radius: 6px; text-decoration: none; transition: background 0.3s ease;">View Project</a>
+    </div>
+        <div style="background-color: #1e1e1e; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <img src="https://i.pinimg.com/1200x/74/11/f8/7411f873889255f374dc871596dbccbb.jpg" alt="Project 2" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+      <h3 style="margin-bottom: 10px;">Weather Web App</h3>
+      <p style="font-size: 0.9rem; color: #ccc;"> A responsive web app that displays real-time weather forecasts using an API. It features an attractive UI with location search, temperature details, and weather conditions for an engaging user experience.</p>
+      <a href="https://example.com/project2" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ff4b2b; color: white; border-radius: 6px; text-decoration: none; transition: background 0.3s ease;">View Project</a>
+    </div>
+        <div style="background-color: #1e1e1e; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <img src="https://i.pinimg.com/736x/21/5b/6b/215b6bdb998a552936e4408486e7914d.jpg" alt="Project 2" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+      <h3 style="margin-bottom: 10px;">Potfilio Website</h3>
+      <p style="font-size: 0.9rem; color: #ccc;">Design The Personal & Responsice Podfilio Website ChatGPT said:
+A modern, responsive portfolio website showcasing my skills, projects, and professional journey, with an interactive design and easy navigation for clients and employers.</p>
+      <a href=" https://hassan-shshzad.github.io/my-web/" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ff4b2b; color: white; border-radius: 6px; text-decoration: none; transition: background 0.3s ease;">View Project</a>
+    </div>
+        <div style="background-color: #1e1e1e; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <img src="https://i.pinimg.com/1200x/af/4d/a2/af4da2ca520d15d1f1fee6ee8b034a5a.jpg" alt="Project 2" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+      <h3 style="margin-bottom: 10px;">Responsive Services Page</h3>
+      <p style="font-size: 0.9rem; color: #ccc;">Create a standalone web page that presents various services you (or a business) offer. The layout should be clean, professional, and fully responsive across devices.
+</p>
+      <a href="https://hassan-shshzad.github.io/front-end2/" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ff4b2b; color: white; border-radius: 6px; text-decoration: none; transition: background 0.3s ease;">View Project</a>
+    </div>
+        <div style="background-color: #1e1e1e; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <img src="https://i.pinimg.com/736x/61/b7/f4/61b7f435d9a6a10d994651d5d67fdb3d.jpg" alt="Project 2" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+      <h3 style="margin-bottom: 10px;">Responsive Team Members Page</h3>
+      <p style="font-size: 0.9rem; color: #ccc;">Design a web page that introduces a company's team. Each member should be presented with their photo, name, role, and a short bio or social links.</p>
+      <a href="https://hassan-shshzad.github.io/front-end-3/" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ff4b2b; color: white; border-radius: 6px; text-decoration: none; transition: background 0.3s ease;">View Project</a>
+    </div>
+        <div style="background-color: #1e1e1e; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <img src="https://i.pinimg.com/736x/3e/86/b1/3e86b199e1ec237e7a6e1f40baea0885.jpg" alt="Project 2" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+      <h3 style="margin-bottom: 10px;">Animated Landing Page for a Product or Service</h3>
+      <p style="font-size: 0.9rem; color: #ccc;">Design and develop a landing page for a fictional or real product/service. The goal is to make it visually appealing and interactive using basic frontend animation techniques (CSS or JavaScript-based).</p>
+      <a href="https://hassan-shshzad.github.io/front-end4/" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ff4b2b; color: white; border-radius: 6px; text-decoration: none; transition: background 0.3s ease;">View Project</a>
+    </div>
+        <div style="background-color: #1e1e1e; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <img src="https://i.pinimg.com/736x/70/0b/c1/700bc1e0ef6ffdecb07a740f6607a223.jpg" alt="Project 2" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+      <h3 style="margin-bottom: 10px;">Netflix  Website Homepage (Front-End Only)</h3>
+      <p style="font-size: 0.9rem; color: #ccc;"> Test your UI/UX and front-end design skills by recreating and improving the homepage of a well-known website using HTML, CSS, and JavaScript (or any frontend framework like React, Vue, etc.).</p>
+      <a href="https://hassan-shshzad.github.io/frontend-5/" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ff4b2b; color: white; border-radius: 6px; text-decoration: none; transition: background 0.3s ease;">View Project</a>
+    </div>
+        <div style="background-color: #1e1e1e; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <img src="https://i.pinimg.com/736x/6c/da/2b/6cda2bdb9d20ebf95f2d188544e53688.jpg" alt="Project 2" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+      <h3 style="margin-bottom: 10px;"> Responsive Blog Homepage</h3>
+      <p style="font-size: 0.9rem; color: #ccc;"> To enhance your front-end design skills by creating a fully responsive blog homepage layout using HTML and CSS ( frameworks like Bootstrap for this task).</p>
+      <a href=" https://hassan-shshzad.github.io/front-end6/
+" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ff4b2b; color: white; border-radius: 6px; text-decoration: none; transition: background 0.3s ease;">View Project</a>
+    </div>
+        <div style="background-color: #1e1e1e; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <img src="https://i.pinimg.com/1200x/14/03/5b/14035be7eee644ffbd76e06ecafb4c5d.jpg" alt="Project 2" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+      <h3 style="margin-bottom: 10px;"> Responsive Product Landing Page</h3>
+      <p style="font-size: 0.9rem; color: #ccc;"> To create a clean, modern, and responsive product landing page that showcases your front-end layout and visual design skills</p>
+      <a href="https://hassan-shshzad.github.io/front-end7/" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ff4b2b; color: white; border-radius: 6px; text-decoration: none; transition: background 0.3s ease;">View Project</a>
+    </div>
+
+    <!-- Add the rest in the same format -->
+
+  </div>
+</section>
+
+<style>
+  #projects div:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+  #projects a:hover {
+    background-color: #ff6f4b;
+  }
+</style>
+
+
+
+
+<!-- Hover Effect -->
+<style>
+  #projects a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+</style>
+
+
+    <!-- CONTACT -->
+    <section id="contact" class="reveal" aria-labelledby="contact-title">
+      <div class="section-head">
+        <h2 id="contact-title">Contact</h2>
+        <div style="color:var(--muted)">Let's build something together — reach out!</div>
+      </div>
+
+      <div class="grid contact-grid" style="gap:18px">
+        <div class="contact-card">
+          <form id="contactForm" action="mailto:you@example.com" method="post" enctype="text/plain" onsubmit="submittedToast(event)">
+            <label for="name">Name</label>
+            <input id="name" name="Name" required placeholder="Your full name">
+
+            <label for="email">Email</label>
+            <input id="email" name="Email" type="email" required placeholder="you@example.com">
+
+            <label for="message">Message</label>
+            <textarea id="message" name="Message" required placeholder="Tell me about your project..."></textarea>
+
+            <div style="margin-top:12px;display:flex;gap:10px">
+              <button class="btn-primary" type="submit">Send</button>
+              <button class="btn-ghost" type="reset">Reset</button>
+            </div>
+          </form>
+
+          <div style="margin-top:12px;color:var(--muted)">
+            Or email me directly: <a href="mailto:you@example.com" style="color:var(--accent)">you@example.com</a>
+          </div>
+        </div>
+
+        <aside class="contact-card">
+          <strong>Social</strong>
+          <div class="socials" aria-label="Social links">
+            <a href=" https://www.linkedin.com/in/hassan-shahzad-07536b318/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://github.com/hassan-shshzad" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://x.com/ha56281" target="_blank" rel="noreferrer">Twitter</a>
+            <a href="https://www.facebook.com/profile.php?id=61578639584660" target="_blank" rel="noreferrer">Facebook</a>
+          </div>
+
+          <div style="margin-top:18px;color:var(--muted)"><strong>Phone:</strong> +92 311 7343 979</div>
+          <div style="margin-top:10px;color:var(--muted)"><strong>Location:</strong> Faisalabad, Pakistan</div>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="reveal">
+      <div style="opacity:0.8">© <span id="year"></span> Your Name — Full-Stack Developer • Built with Heart</div>
+    </footer>
+  </div>
+
+  <script>
+    // Theme toggle - persists to localStorage
+    const body = document.body;
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const current = localStorage.getItem('theme') || 'dark';
+    if(current === 'light'){ body.classList.add('light'); document.documentElement.classList.add('light'); themeIcon.textContent = '☀️'; themeToggle.setAttribute('aria-pressed','true') }
+
+    themeToggle.addEventListener('click', () => {
+      const light = body.classList.toggle('light');
+      document.documentElement.classList.toggle('light');
+      localStorage.setItem('theme', light ? 'light' : 'dark');
+      themeIcon.textContent = light ? '☀️' : '🌙';
+      themeToggle.setAttribute('aria-pressed', String(light));
+    });
+
+    // Reveal on scroll using IntersectionObserver
+    const revealEls = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(el => obs.observe(el));
+
+    // Simple send form UX: show a quick alert and let mailto proceed
+    function submittedToast(e){
+      // optional: preventDefault to handle via API. For now, allow mailto to open the user's email client.
+      alert('Your email client will open. If not, email directly: you@example.com');
+    }
+
+    // Fill year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Optional: keyboard friendly carousel scroll
+    const track = document.getElementById('carouselTrack');
+    track.addEventListener('keydown', (ev) => {
+      if(ev.key === 'ArrowRight'){ track.scrollBy({left:220,behavior:'smooth'}) }
+      if(ev.key === 'ArrowLeft'){ track.scrollBy({left:-220,behavior:'smooth'}) }
+    });
+  </script>
+</body>
+</html>
